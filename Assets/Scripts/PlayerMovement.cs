@@ -3,6 +3,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 1.0f;
+    public float jumpSpeed = 2.0f;
+
+    public Rigidbody rd;
 
     private Animator animator;
 
@@ -38,5 +41,10 @@ public class PlayerMovement : MonoBehaviour
     {
         float targetX = Mathf.Clamp(transform.position.x + laneOffset, minLaneX, maxLaneX);
         transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
+    }
+    
+    public void Jump()
+    {
+        rd.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
     }
 }
