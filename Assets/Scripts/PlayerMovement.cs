@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private const float minLaneX = -2.5f;
     private const float maxLaneX = 2.5f;
 
+    public Hud hud;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -46,5 +47,14 @@ public class PlayerMovement : MonoBehaviour
     public void Jump()
     {
         rd.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            Destroy(collision.gameObject);
+            hud.AddCoin();
+        }
     }
 }

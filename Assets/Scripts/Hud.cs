@@ -15,6 +15,9 @@ public class Hud : MonoBehaviour
     public TextMeshProUGUI time;
     private float elapstTime=0f;
     
+    public TextMeshProUGUI Coin;
+    private int coins;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +30,7 @@ public class Hud : MonoBehaviour
         elapstTime += Time.deltaTime;
         updateTime(elapstTime);
         updateDistance();
+        UpdateCoins();
     }
 
 
@@ -45,5 +49,16 @@ public class Hud : MonoBehaviour
         
         
         time.text = "Time: \n"+ string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, miliseconds);
+    }
+
+    public void AddCoin()
+    {
+        coins += 1;
+        UpdateCoins();
+    }
+
+    private void UpdateCoins()
+    {
+        Coin.text = "Coins: "+coins;
     }
 }
