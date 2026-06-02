@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rd;
 
     private Animator animator;
+    
+    private bool onGround;
 
     private const float laneStep = 2.5f;
     private const float minLaneX = -2.5f;
@@ -46,7 +48,11 @@ public class PlayerMovement : MonoBehaviour
     
     public void Jump()
     {
-        rd.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+        if (onGround)
+        {
+            rd.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            onGround = false;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -56,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         TryCollectCoin(collision.gameObject);
+
+        if (collision.gameObject.tag == "Platform")
+        {
+            onGround = true;
+        }
     }
 
     private void TryCollectCoin(GameObject otherObject)
