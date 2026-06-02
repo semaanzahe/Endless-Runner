@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     {
         TryCollectCoin(collision.gameObject);
 
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform"||collision.gameObject.tag == "Box")
         {
             onGround = true;
         }
