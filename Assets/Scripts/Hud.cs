@@ -17,6 +17,9 @@ public class Hud : MonoBehaviour
     
     public TextMeshProUGUI Coin;
     private int coins;
+
+    public TextMeshProUGUI Score;
+    private int score;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,16 +31,17 @@ public class Hud : MonoBehaviour
     void Update()
     {
         elapstTime += Time.deltaTime;
+        float dist= Vector3.Distance(player.position, startPos);
         updateTime(elapstTime);
-        updateDistance();
+        updateDistance(dist);
         UpdateCoins();
+         score = (int)(coins*10+elapstTime+(int)dist);
+        UpdateScore(score);
     }
 
 
-    private void updateDistance()
+    private void updateDistance(float dist)
     {
-        float dist= Vector3.Distance(player.position, startPos);
-        Math.Abs(dist);
         distance.text = "Distance: \n" + dist.ToString("F0");
     }
 
@@ -60,5 +64,11 @@ public class Hud : MonoBehaviour
     private void UpdateCoins()
     {
         Coin.text = "Coins: "+coins;
+    }
+
+    private void UpdateScore(int score)
+    {
+        
+        Score.text = "Score: "+score;
     }
 }
