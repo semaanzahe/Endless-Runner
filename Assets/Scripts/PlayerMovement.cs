@@ -48,12 +48,23 @@ public class PlayerMovement : MonoBehaviour
     {
         rd.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        TryCollectCoin(other.gameObject);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Coin"))
+        TryCollectCoin(collision.gameObject);
+    }
+
+    private void TryCollectCoin(GameObject otherObject)
+    {
+        if (otherObject == null || !otherObject.activeSelf || !otherObject.CompareTag("Coin")) return;
+
+        otherObject.SetActive(false);
+        if (hud != null)
         {
-            Destroy(collision.gameObject);
             hud.AddCoin();
         }
     }
