@@ -30,6 +30,7 @@ public class Hud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         elapstTime += Time.deltaTime;
         float dist= Vector3.Distance(player.position, startPos);
         updateTime(elapstTime);
