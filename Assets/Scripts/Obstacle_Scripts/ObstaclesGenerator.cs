@@ -7,11 +7,33 @@ public class ObstaclesGenerator : MonoBehaviour
     public List<Transform> lines = new List<Transform>();
     [Range(0f, 1f)] public float platformObstacleChance = 0.45f;
     [Range(0f, 1f)] public float laneObstacleChance = 0.7f;
+    [Min(0)] public int maxObstaclesPerPlatform = 3;
 
     private readonly Random random = new Random();
     private readonly List<GameObject> activeObstacles = new List<GameObject>();
     private readonly List<GameObject> activeObstaclePrefabs = new List<GameObject>();
+    private readonly List<GameObject> runtimeAllowedObstacleTypes = new List<GameObject>();
     private ObstaclesPoolingSystem obstaclesPool;
+
+    public void ApplyDifficulty(DifficultySystem difficulty)
+    {
+        if (difficulty == null) return;
+
+        platformObstacleChance = Mathf.Clamp01(difficulty.spawnRate);
+        laneObstacleChance = Mathf.Clamp01(difficulty.spawnRate);
+        maxObstaclesPerPlatform = Mathf.Max(0, difficulty.maxObstacles);
+
+        runtimeAllowedObstacleTypes.Clear();
+        if (difficulty.allowedObstacleTypes == null) return;
+
+        for (int i = 0; i < difficulty.allowedObstacleTypes.Count; i++)
+        {
+            GameObject obstacleType = difficulty.allowedObstacleTypes[i];
+            if (obstacleType == null) continue;
+
+            runtimeAllowedObstacleTypes.Add(obstacleType);
+        }
+    }
 
     public bool GenerateObstacles()
     {
@@ -21,7 +43,8 @@ public class ObstaclesGenerator : MonoBehaviour
         }
 
         if (obstaclesPool == null || lines == null || lines.Count == 0) return false;
-        if (obstaclesPool.obstaclesPrefabs == null || obstaclesPool.obstaclesPrefabs.Count == 0) return false;
+        if (maxObstaclesPerPlatform <= 0) return false;
+        if (!HasAnyAvailableObstaclePrefab()) return false;
 
         activeObstacles.Clear();
         activeObstaclePrefabs.Clear();
@@ -30,15 +53,16 @@ public class ObstaclesGenerator : MonoBehaviour
 
         int safeLaneIndex = random.Next(0, lines.Count);
         bool spawnedAny = false;
+        int spawnedCount = 0;
         int positionsCount = lines[0].childCount;
 
-        for (int laneIndex = 0; laneIndex < lines.Count; laneIndex++)
+        for (int laneIndex = 0; laneIndex < lines.Count && spawnedCount < maxObstaclesPerPlatform; laneIndex++)
         {
             if (laneIndex == safeLaneIndex) continue;
             Transform lane = lines[laneIndex];
             if (lane == null) continue;
 
-            for (int i = 0; i < positionsCount; i++)
+            for (int i = 0; i < positionsCount && spawnedCount < maxObstaclesPerPlatform; i++)
             {
                 if (i >= lane.childCount) continue;
                 if (random.NextDouble() > laneObstacleChance) continue;
@@ -49,10 +73,11 @@ public class ObstaclesGenerator : MonoBehaviour
 
                 SpawnObstacle(prefab, spawnPoint);
                 spawnedAny = true;
+                spawnedCount++;
             }
         }
 
-        if (!spawnedAny)
+        if (!spawnedAny && spawnedCount < maxObstaclesPerPlatform)
         {
             spawnedAny = SpawnFallbackObstacle(safeLaneIndex);
         }
@@ -118,6 +143,20 @@ public class ObstaclesGenerator : MonoBehaviour
 
     private GameObject GetRandomObstaclePrefab()
     {
+        if (runtimeAllowedObstacleTypes.Count > 0)
+        {
+            int allowedCount = runtimeAllowedObstacleTypes.Count;
+            for (int i = 0; i < allowedCount; i++)
+            {
+                int randomIndex = random.Next(0, allowedCount);
+                GameObject prefab = runtimeAllowedObstacleTypes[randomIndex];
+                if (prefab != null)
+                {
+                    return prefab;
+                }
+            }
+        }
+
         int prefabCount = obstaclesPool.obstaclesPrefabs.Count;
         if (prefabCount == 0) return null;
 
@@ -132,5 +171,31 @@ public class ObstaclesGenerator : MonoBehaviour
         }
 
         return null;
+    }
+
+    private bool HasAnyAvailableObstaclePrefab()
+    {
+        if (runtimeAllowedObstacleTypes.Count > 0)
+        {
+            for (int i = 0; i < runtimeAllowedObstacleTypes.Count; i++)
+            {
+                if (runtimeAllowedObstacleTypes[i] != null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        if (obstaclesPool.obstaclesPrefabs == null || obstaclesPool.obstaclesPrefabs.Count == 0) return false;
+
+        for (int i = 0; i < obstaclesPool.obstaclesPrefabs.Count; i++)
+        {
+            if (obstaclesPool.obstaclesPrefabs[i] != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

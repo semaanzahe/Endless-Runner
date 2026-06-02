@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class Hud : MonoBehaviour
 {
     
+    public static Hud Instance;
     public Transform player;
     
     private Vector3 startPos;
@@ -20,6 +21,18 @@ public class Hud : MonoBehaviour
 
     public TextMeshProUGUI Score;
     private int score;
+    public int CurrentScore => score;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,7 +82,8 @@ public class Hud : MonoBehaviour
 
     private void UpdateScore(int score)
     {
-        
+        if (Score == null) return;
+
         Score.text = "Score: "+score;
     }
 }

@@ -5,9 +5,11 @@ public class PlatformGenerator : MonoBehaviour
 {
     public float platformZ = 20;
     public Transform cameraTransform;
+    [Min(0)] public int platformsWithoutObstaclesAtStart = 5;
 
     private int platformCount;
     private float nextPosition;
+    private int spawnedPlatformsCount;
     private readonly List<GameObject> activePlatforms = new List<GameObject>();
 
     private void Start()
@@ -20,6 +22,7 @@ public class PlatformGenerator : MonoBehaviour
 
         platformCount = PlatformPoolingSystem.instance.numberOfPlatforms;
         nextPosition = 0f;
+        spawnedPlatformsCount = 0;
 
         for (int i = 0; i < platformCount; i++)
         {
@@ -78,8 +81,10 @@ public class PlatformGenerator : MonoBehaviour
         nextPosition += platformZ;
         activePlatforms.Add(platform);
         bool hasObstacles = false;
+        bool canSpawnObstacles = spawnedPlatformsCount >= platformsWithoutObstaclesAtStart;
         ObstaclesGenerator obstacles = platform.GetComponent<ObstaclesGenerator>();
-        if (obstacles != null)
+        
+        if (obstacles != null && canSpawnObstacles)
         {
             hasObstacles = obstacles.GenerateObstacles();
         }
@@ -102,5 +107,7 @@ public class PlatformGenerator : MonoBehaviour
         {
             environment.GenerateEnvironment();
         }
+
+        spawnedPlatformsCount++;
     }
 }

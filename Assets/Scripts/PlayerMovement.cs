@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator != null)
         {
-            animator.SetFloat("Run", 1);
+            animator.SetInteger("Run", 1);
         }
     }
 
