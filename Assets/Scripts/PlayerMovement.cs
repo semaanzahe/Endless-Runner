@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
     private const float maxLaneX = 2.5f;
 
     public Hud hud;
+
+    public GameObject controls;
+    public GameObject DeathScreen;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -67,6 +70,11 @@ public class PlayerMovement : MonoBehaviour
         {
             onGround = true;
         }
+
+        if (collision.gameObject.CompareTag("KillBox"))
+        {
+            Death();
+        }
     }
 
     private void TryCollectCoin(GameObject otherObject)
@@ -78,5 +86,13 @@ public class PlayerMovement : MonoBehaviour
         {
             hud.AddCoin();
         }
+    }
+    
+    
+    private void Death()
+    {
+        Time.timeScale = 0;
+        controls.SetActive(false);
+        DeathScreen.SetActive(true);
     }
 }

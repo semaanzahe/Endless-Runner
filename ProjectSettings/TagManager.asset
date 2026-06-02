@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Coin
   - Box
+  - Platform
+  - KillBox
   layers:
   - Default
   - TransparentFX
