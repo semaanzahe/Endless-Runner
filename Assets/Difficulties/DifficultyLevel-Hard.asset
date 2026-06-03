@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0c7caf58e5e7e47af094107416164b, type: 3}
   m_Name: DifficultyLevel-Hard
   m_EditorClassIdentifier: Assembly-CSharp::DifficultySystem
-  spawnRate: 0.35
-  movementSpeed: 7
-  maxObstacles: 3
-  allowedObstacleTypes: []
-  platformColor: {r: 1, g: 1, b: 1, a: 1}
-  wallColor: {r: 1, g: 1, b: 1, a: 1}
+  spawnRate: 0.75
+  movementSpeed: 14
+  maxObstacles: 20
+  allowedObstacleTypes:
+  - {fileID: 2959496292414680887, guid: b3d6caa2d04379f4898332c975666312, type: 3}
+  - {fileID: 4031840817476587876, guid: af81e60cad1e1dc46b676573093849ef, type: 3}
+  - {fileID: 7391218885208258264, guid: f82974ad782880946b070237a763fa7d, type: 3}
+  platformColor: {r: 0.6, g: 0.1960784, b: 0.8000001, a: 1}
+  wallColor: {r: 0.6, g: 0.1960784, b: 0.8000001, a: 1}
