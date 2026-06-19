@@ -1678,8 +1678,8 @@ MonoBehaviour:
   hud: {fileID: 1254212619}
   playerMovement: {fileID: 1433738200}
   easyDifficulty: {fileID: 11400000, guid: f057c5ccd61d79649b0a2658f5be4b03, type: 2}
-  mediumDifficulty: {fileID: 11400000, guid: ef51be38232066c48b24aaca441e7a64, type: 2}
-  hardDifficulty: {fileID: 11400000, guid: 26d9090030acc4c4eb44f015d4dfccd9, type: 2}
+  mediumDifficulty: {fileID: 11400000, guid: 26d9090030acc4c4eb44f015d4dfccd9, type: 2}
+  hardDifficulty: {fileID: 11400000, guid: ef51be38232066c48b24aaca441e7a64, type: 2}
   mediumScore: 0
   hardScore: 1
 --- !u!4 &1524271169
