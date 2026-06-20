@@ -8,6 +8,8 @@ public class SwipeDetect : MonoBehaviour
     
     private Vector2 prevTouchPos;
     bool startSwipeDetect = false;
+
+    public PlayerMovement Player;
     private void Update()
     {
         if (Touch.activeTouches.Count > 0)
@@ -27,6 +29,13 @@ public class SwipeDetect : MonoBehaviour
                 {
                     swipeDiraction.Normalize();
                     Debug.Log($"Swipe Detected! direction: {swipeDiraction}");
+                    Player.MoveRight();
+                }
+                else if (swipeDiraction.magnitude < 50)
+                {
+                    swipeDiraction.Normalize();
+                    Debug.Log($"Swipe Detected! direction: {swipeDiraction}");
+                    Player.MoveLeft();
                 }
             }
         } 
