@@ -37,6 +37,11 @@ public class SwipeDetect : MonoBehaviour
                     Debug.Log($"Swipe Detected! direction: {swipeDiraction}");
                     Player.MoveLeft();
                 }
+
+                if (swipeDiraction.y > 0)
+                {
+                    Player.Jump();
+                }
                 
             }
         } 
