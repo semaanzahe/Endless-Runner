@@ -25,6 +25,7 @@ public class SwipeDetect : MonoBehaviour
             {
                 startSwipeDetect = false;
                 Vector2 swipeDiraction =  touch.screenPosition - prevTouchPos;
+                
                 if (swipeDiraction.x > 0)
                 {
                     swipeDiraction.Normalize();
@@ -37,8 +38,7 @@ public class SwipeDetect : MonoBehaviour
                     Debug.Log($"Swipe Detected! direction: {swipeDiraction}");
                     Player.MoveLeft();
                 }
-
-                if (swipeDiraction.y > 0)
+                if (swipeDiraction.y > 0.74)
                 {
                     Player.Jump();
                 }

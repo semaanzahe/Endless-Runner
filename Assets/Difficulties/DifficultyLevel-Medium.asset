@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DifficultySystem
   spawnRate: 0.65
   movementSpeed: 10
-  maxObstacles: 15
+  maxObstacles: 5
   allowedObstacleTypes:
   - {fileID: 2959496292414680887, guid: b3d6caa2d04379f4898332c975666312, type: 3}
   - {fileID: 4031840817476587876, guid: af81e60cad1e1dc46b676573093849ef, type: 3}
+  allowedCollectables: []
   platformColor: {r: 0.4980392, g: 1, b: 0.8313726, a: 1}
   wallColor: {r: 0.4980392, g: 1, b: 0.8313726, a: 1}

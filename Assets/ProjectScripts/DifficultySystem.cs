@@ -10,6 +10,7 @@ public class DifficultySystem : ScriptableObject
     [Min(0f)] public float movementSpeed = 7f;
     [Min(0)] public int maxObstacles = 3;
     public List<GameObject> allowedObstacleTypes = new List<GameObject>();
+    public List<GameObject> allowedCollectables = new List<GameObject>();
 
     [Header("Platform Look")]
     public Color platformColor = Color.white;
