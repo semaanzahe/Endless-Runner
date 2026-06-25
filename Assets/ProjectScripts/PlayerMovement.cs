@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private const float maxLaneX = 2.5f;
 
     public Hud hud;
+    
+    private bool IsInvinsible;
 
     public GameObject controls;
     public GameObject DeathScreen;
@@ -71,9 +73,14 @@ public class PlayerMovement : MonoBehaviour
             onGround = true;
         }
 
-        if (collision.gameObject.CompareTag("KillBox"))
+        if (collision.gameObject.CompareTag("KillBox")&&!IsInvinsible)
         {
             Death();
+        }
+        else if(collision.gameObject.CompareTag("KillBox") && IsInvinsible)
+        {
+            GameObject.FindWithTag("Box").SetActive(false);
+            IsInvinsible = false;
         }
     }
 
