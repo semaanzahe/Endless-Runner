@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.gameObject.CompareTag("KillBox")&&!IsInvinsible)
         {
-            Death();
+            CanvasManager.instance.Death();
         }
         else if(collision.gameObject.CompareTag("KillBox") && IsInvinsible)
         {
@@ -96,10 +96,4 @@ public class PlayerMovement : MonoBehaviour
     }
     
     
-    private void Death()
-    {
-        Time.timeScale = 0;
-        controls.SetActive(false);
-        DeathScreen.SetActive(true);
-    }
 }

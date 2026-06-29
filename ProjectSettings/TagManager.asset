@@ -8,6 +8,11 @@ TagManager:
   - Box
   - Platform
   - KillBox
+  - Hud
+  - PauseMenu
+  - DeathScreen
+  - Controls
+  - Swipe
   layers:
   - Default
   - TransparentFX

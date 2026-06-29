@@ -65,6 +65,7 @@ public class PlatformGenerator : MonoBehaviour
                 {
                     coin.UpdateCoins();
                 }
+                ReturnActivePowerUps(platform);
 
                 activePlatforms.RemoveAt(i);
                 PlatformPoolingSystem.instance.ReturnPlatform(platform);
@@ -99,6 +100,10 @@ public class PlatformGenerator : MonoBehaviour
             else
             {
                 coin.GenerateCoins();
+                if (DifficultyManager.instance != null)
+                {
+                    DifficultyManager.instance.TrySpawnQueuedPowerUpOnCoinPlatform(coin);
+                }
             }
         }
 
@@ -109,5 +114,19 @@ public class PlatformGenerator : MonoBehaviour
         }
 
         spawnedPlatformsCount++;
+    }
+
+    private void ReturnActivePowerUps(GameObject platform)
+    {
+        if (platform == null) return;
+
+        PowerUpsTrigger[] powerUps = platform.GetComponentsInChildren<PowerUpsTrigger>(true);
+        for (int i = 0; i < powerUps.Length; i++)
+        {
+            PowerUpsTrigger powerUp = powerUps[i];
+            if (powerUp == null || !powerUp.gameObject.activeSelf) continue;
+
+            powerUp.ReturnToPool();
+        }
     }
 }

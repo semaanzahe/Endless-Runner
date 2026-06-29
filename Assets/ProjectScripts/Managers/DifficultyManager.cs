@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[DisallowMultipleComponent]
+
 public class DifficultyManager : MonoBehaviour
 {
     public static DifficultyManager instance;
@@ -15,7 +17,13 @@ public class DifficultyManager : MonoBehaviour
     [Min(0)] public int mediumScore = 150;
     [Min(0)] public int hardScore = 350;
 
+    [Header("Power Ups")]
+    public PowerUpsGenerator powerUpsGenerator;
+
     public DifficultySystem CurrentDifficulty { get; private set; }
+
+    private int nextPowerUpSpawnScore;
+    private int pendingPowerUpSpawns;
 
     private void Awake()
     {
@@ -40,12 +48,29 @@ public class DifficultyManager : MonoBehaviour
             playerMovement = FindObjectOfType<PlayerMovement>();
         }
 
+        if (powerUpsGenerator == null)
+        {
+            powerUpsGenerator = FindObjectOfType<PowerUpsGenerator>();
+        }
+
+        if (powerUpsGenerator == null)
+        {
+            powerUpsGenerator = GetComponent<PowerUpsGenerator>();
+        }
+
+        if (powerUpsGenerator == null)
+        {
+            powerUpsGenerator = gameObject.AddComponent<PowerUpsGenerator>();
+        }
+
         UpdateDifficultyFromScore();
+        InitializePowerUpSpawnThreshold();
     }
 
     private void Update()
     {
         UpdateDifficultyFromScore();
+        QueuePowerUpsByScore();
     }
 
     private void UpdateDifficultyFromScore()
@@ -90,6 +115,51 @@ public class DifficultyManager : MonoBehaviour
         {
             ApplyPlatformColors(difficulty);
         }
+    }
+
+    private void InitializePowerUpSpawnThreshold()
+    {
+        nextPowerUpSpawnScore = GetCurrentPowerUpInterval();
+        pendingPowerUpSpawns = 0;
+    }
+
+    private void QueuePowerUpsByScore()
+    {
+        if (hud == null || CurrentDifficulty == null) return;
+
+        int score = hud.CurrentScore;
+        if (nextPowerUpSpawnScore <= 0)
+        {
+            nextPowerUpSpawnScore = GetCurrentPowerUpInterval();
+        }
+
+        while (score >= nextPowerUpSpawnScore)
+        {
+            pendingPowerUpSpawns++;
+
+            nextPowerUpSpawnScore += GetCurrentPowerUpInterval();
+        }
+    }
+
+    public void TrySpawnQueuedPowerUpOnCoinPlatform(CoinsGenerator coinsGenerator)
+    {
+        if (pendingPowerUpSpawns <= 0) return;
+        if (CurrentDifficulty == null || powerUpsGenerator == null || coinsGenerator == null) return;
+        if (CurrentDifficulty.allowedPowerUps == null || CurrentDifficulty.allowedPowerUps.Count == 0) return;
+        if (!coinsGenerator.HasCoinsOnPlatform()) return;
+
+        if (!coinsGenerator.TryGetEmptyLaneSpawnPoint(out Transform spawnPoint)) return;
+
+        bool spawned = powerUpsGenerator.SpawnPowerUpOnSpawnPoint(CurrentDifficulty.allowedPowerUps, spawnPoint);
+        if (!spawned) return;
+
+        pendingPowerUpSpawns--;
+    }
+
+    private int GetCurrentPowerUpInterval()
+    {
+        if (CurrentDifficulty == null) return 500;
+        return Mathf.Max(1, CurrentDifficulty.powerUpSpawnScoreInterval);
     }
 
     private void ApplyPlayerDifficulty(DifficultySystem difficulty)

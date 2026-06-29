@@ -18,6 +18,8 @@ MonoBehaviour:
   allowedObstacleTypes:
   - {fileID: 2959496292414680887, guid: b3d6caa2d04379f4898332c975666312, type: 3}
   - {fileID: 4031840817476587876, guid: af81e60cad1e1dc46b676573093849ef, type: 3}
-  allowedCollectables: []
+  powerUpSpawnScoreInterval: 500
+  allowedPowerUps:
+  - {fileID: 11400000, guid: bdf02e664e9292a4a94051cb4c034d9f, type: 2}
   platformColor: {r: 0.4980392, g: 1, b: 0.8313726, a: 1}
   wallColor: {r: 0.4980392, g: 1, b: 0.8313726, a: 1}

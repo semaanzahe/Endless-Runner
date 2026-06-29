@@ -17,6 +17,8 @@ MonoBehaviour:
   maxObstacles: 3
   allowedObstacleTypes:
   - {fileID: 2959496292414680887, guid: b3d6caa2d04379f4898332c975666312, type: 3}
-  allowedCollectables: []
+  powerUpSpawnScoreInterval: 500
+  allowedPowerUps:
+  - {fileID: 11400000, guid: bdf02e664e9292a4a94051cb4c034d9f, type: 2}
   platformColor: {r: 1, g: 1, b: 1, a: 0}
   wallColor: {r: 1, g: 1, b: 1, a: 0}
