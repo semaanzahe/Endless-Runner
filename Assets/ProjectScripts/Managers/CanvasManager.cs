@@ -8,7 +8,9 @@ public class CanvasManager : MonoBehaviour
     private GameObject Hud;
     private GameObject DeathScreen;
     private GameObject Controls;
-    
+    private GameObject SwipeManager;
+
+    private bool swipe = true;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,7 +26,8 @@ public class CanvasManager : MonoBehaviour
        PauseMenu.SetActive(false);
        Hud.SetActive(true);
        DeathScreen.SetActive(false);
-       Controls.SetActive(true);
+       Controls.SetActive(false);
+       SwipeManager.SetActive(true);
     }
 
     public void Pause()
@@ -33,13 +36,22 @@ public class CanvasManager : MonoBehaviour
         PauseMenu.SetActive(true);
         Hud.SetActive(false);
         Controls.SetActive(false);
+        SwipeManager.SetActive(false);
     }
     public void Resume()
     {
         Time.timeScale = 1;
         PauseMenu.SetActive(false);
         Hud.SetActive(true);
-        Controls.SetActive(true);
+        if (swipe)
+        {
+            SwipeManager.SetActive(true);
+        }
+        else
+        {
+           Controls.SetActive(true); 
+        }
+        
     }
 
     public void Death()
@@ -65,7 +77,22 @@ public class CanvasManager : MonoBehaviour
         GameObject ControlsObject = GameObject.FindGameObjectWithTag("Controls");
         if (ControlsObject != null)
             Controls = ControlsObject;
+        GameObject SwipeObject = GameObject.FindGameObjectWithTag("Swipe");
+        if (SwipeObject != null)
+            SwipeManager = SwipeObject;
         
             
+    }
+    
+    public  void ToggleControl()
+    {
+        if (swipe)
+        {
+            swipe = false;
+        }
+        else
+        {
+            swipe = true;
+        }
     }
 }
