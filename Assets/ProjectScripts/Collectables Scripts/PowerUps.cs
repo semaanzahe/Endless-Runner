@@ -3,8 +3,8 @@ using UnityEngine;
 
 public enum PowerUpsEnum
 {
-    PowerUp1,
-    PowerUp2,
+    Invincible,
+    Double_money,
 }
 [CreateAssetMenu(menuName = "Collectables/PowerUP")]
 public class PowerUp : Collectables
@@ -16,10 +16,10 @@ public class PowerUp : Collectables
         
         switch (powerUp)
         {
-            case PowerUpsEnum.PowerUp1:
+            case PowerUpsEnum.Invincible:
                 Debug.Log("PowerUp 1");
                 break;
-            case PowerUpsEnum.PowerUp2:
+            case PowerUpsEnum.Double_money:
                 Debug.Log("PowerUp 2");
                 break;
         }
