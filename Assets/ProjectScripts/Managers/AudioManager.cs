@@ -108,27 +108,36 @@ public class AudioManager : MonoBehaviour
     
     public void PlaySFX3D(SFXType soundType, Vector3 position, float volume = 1.0f)
     {
-        Debug.Log($"AudioManager: Playing SFX {soundType}");
-        // Grab the clip associated with the requested Enum
         if (sfxDictionary.TryGetValue(soundType, out AudioClip clip))
         {
-            if (clip == null)
-            {
-                Debug.Log("the clip is null");
-                return;
-            }
+            if (clip == null) return;
 
             AudioSource availableSource = GetAvailableSFXSource();
             if (availableSource != null)
             {
                 availableSource.transform.position = position;
                 availableSource.volume = volume;
-                availableSource.PlayOneShot(clip);
+            
+                availableSource.clip = clip;
+                // Ensure real-time playback updates are forced
+                availableSource.velocityUpdateMode = AudioVelocityUpdateMode.Dynamic; 
+                availableSource.Play();
+
+                // Fire a coroutine that uses real-world wall clock seconds
+                StartCoroutine(RealtimeCutoffRoutine(availableSource, 1.0f)); 
             }
         }
-        else
+    }
+
+    private System.Collections.IEnumerator RealtimeCutoffRoutine(AudioSource source, float delay)
+    {
+        // CRITICAL: This waits in real-world time, ignoring Time.timeScale = 0
+        yield return new WaitForSecondsRealtime(delay);
+
+        if (source != null && source.isPlaying)
         {
-            Debug.LogWarning($"AudioManager: Sound type {soundType} was not configured in the inspector library list!");
+            source.Stop();
+            source.clip = null;
         }
     }
 
