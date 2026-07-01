@@ -84,7 +84,7 @@ public class CanvasManager : MonoBehaviour
             
     }
     
-    public  void ToggleControl()
+    public void ToggleControl()
     {
         if (swipe)
         {
