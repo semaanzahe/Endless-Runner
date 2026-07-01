@@ -19,8 +19,7 @@ public class PlayerMovement : MonoBehaviour
     
     private bool IsInvinsible;
 
-    public GameObject controls;
-    public GameObject DeathScreen;
+    
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -76,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("KillBox")&&!IsInvinsible)
         {
             CanvasManager.instance.Death();
+            AudioManager.Instance.PlaySFX3D(SFXType.GameOver,transform.position);
         }
         else if(collision.gameObject.CompareTag("KillBox") && IsInvinsible)
         {
@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         otherObject.SetActive(false);
         if (hud != null)
         {
+            AudioManager.Instance.PlaySFX3D(SFXType.CoinPickup, transform.position);
             hud.AddCoin();
         }
     }
