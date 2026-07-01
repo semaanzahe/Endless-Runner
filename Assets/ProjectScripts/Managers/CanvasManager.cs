@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class CanvasManager : MonoBehaviour
 {
     public static CanvasManager instance;
@@ -33,6 +34,7 @@ public class CanvasManager : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+        AudioManager.Instance.PauseMusic();
         PauseMenu.SetActive(true);
         Hud.SetActive(false);
         Controls.SetActive(false);
@@ -41,6 +43,7 @@ public class CanvasManager : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
+        AudioManager.Instance.ResumeMusic();
         PauseMenu.SetActive(false);
         Hud.SetActive(true);
         if (swipe)
@@ -57,6 +60,7 @@ public class CanvasManager : MonoBehaviour
     public void Death()
     {
         Time.timeScale = 0;
+        AudioManager.Instance.StopMusic();
         PauseMenu.SetActive(false);
         Hud.SetActive(false);
         DeathScreen.SetActive(true);

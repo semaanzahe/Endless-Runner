@@ -40,9 +40,43 @@ public class AudioManager : MonoBehaviour
     private AudioSource musicSource;
     private List<AudioSource> sfxPool;
     
+    [Header("Mixer Parameters")]
+    [SerializeField] private AudioMixer mainMixer;
     // A quick-lookup dictionary generated at runtime for performance
     private Dictionary<SFXType, AudioClip> sfxDictionary;
+    void Start()
+    {
+        // Load saved volumes or default to 0.75f if playing for the first time
+        LoadVolumeSettings();
+    }
 
+    public void SetMusicVolume(float value)
+    {
+        // Convert 0-1 slider value to -80dB to 20dB scale
+        float dbVolume = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f;
+        mainMixer.SetFloat("MusicVol", dbVolume);
+    
+        PlayerPrefs.SetFloat("SavedMusicVol", value);
+        PlayerPrefs.Save();
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        float dbVolume = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f;
+        mainMixer.SetFloat("SFXVol", dbVolume);
+    
+        PlayerPrefs.SetFloat("SavedSFXVol", value);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadVolumeSettings()
+    {
+        float musicValue = PlayerPrefs.GetFloat("SavedMusicVol", 0.75f);
+        float sfxValue = PlayerPrefs.GetFloat("SavedSFXVol", 0.75f);
+
+        SetMusicVolume(musicValue);
+        SetSFXVolume(sfxValue);
+    }
     void Awake()
     {
         if (Instance == null)
@@ -138,6 +172,47 @@ public class AudioManager : MonoBehaviour
         {
             source.Stop();
             source.clip = null;
+        }
+    }
+    
+    public void StopSFX(SFXType soundType)
+    {
+        // First, verify the requested sound actually exists in our library
+        if (sfxDictionary.TryGetValue(soundType, out AudioClip clipToStop))
+        {
+            if (clipToStop == null) return;
+
+            // Scan the pool for any source currently playing this exact clip
+            for (int i = 0; i < sfxPool.Count; i++)
+            {
+                if (sfxPool[i].isPlaying && sfxPool[i].clip == clipToStop)
+                {
+                    sfxPool[i].Stop();
+                    sfxPool[i].clip = null; // Clean up the reference so the pool slot is freed
+                }
+            }
+        }
+    }
+    
+    public void StopMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Stop();
+        }
+    }
+    public void PauseMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Pause();
+        }
+    }
+    public void ResumeMusic()
+    {
+        if (musicSource != null && !musicSource.isPlaying)
+        {
+            musicSource.UnPause();
         }
     }
 

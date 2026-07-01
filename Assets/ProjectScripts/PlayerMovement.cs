@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         otherObject.SetActive(false);
         if (hud != null)
         {
-            AudioManager.Instance.PlaySFX3D(SFXType.CoinPickup, transform.position);
+            AudioManager.Instance.PlaySFX3D(SFXType.CoinPickup, transform.position,2);
             hud.AddCoin();
         }
     }
