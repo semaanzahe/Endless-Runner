@@ -41,4 +41,5 @@ public class VolumeSliderController : MonoBehaviour
     {
         AudioManager.Instance.SetSFXVolume(value);
     }
+    
 }
