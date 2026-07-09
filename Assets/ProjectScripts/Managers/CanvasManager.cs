@@ -88,15 +88,13 @@ public class CanvasManager : MonoBehaviour
             
     }
     
-    public void ToggleControl()
+    public void ToggleSwipe()
     {
-        if (swipe)
-        {
-            swipe = false;
-        }
-        else
-        {
-            swipe = true;
-        }
+        swipe = true;
+    }
+
+    public void Togglebuttons()
+    {
+        swipe = false;
     }
 }
