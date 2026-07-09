@@ -527,9 +527,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2027739578}
+      - m_Target: {fileID: 2027739577}
         m_TargetAssemblyTypeName: CanvasManager, Assembly-CSharp
-        m_MethodName: Togglebuttons
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7277,6 +7277,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca13aefbbf695ea4e8ddc935f568e43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &1420898128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420898130}
+  - component: {fileID: 1420898129}
+  m_Layer: 0
+  m_Name: Seriallzator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1420898129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420898128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74952f6b2e55bba4c9ff843511f0c5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1420898130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420898128}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 696.818, y: 1313.2361, z: -5.496885}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1433738200 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 699093776907566058, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
@@ -9655,3 +9699,4 @@ SceneRoots:
   - {fileID: 1294462757}
   - {fileID: 910793222}
   - {fileID: 2121274876}
+  - {fileID: 1420898130}
