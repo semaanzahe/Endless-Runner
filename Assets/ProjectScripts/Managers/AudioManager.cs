@@ -136,6 +136,7 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null || musicSource == null) return;
         musicSource.clip = clip;
+        musicSource.loop = true;
         musicSource.Play();
     }
 

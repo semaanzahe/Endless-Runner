@@ -13,6 +13,8 @@ public class Serializator : MonoBehaviour
     void SerializeData()
     {
         var json = JsonUtility.ToJson(new SerializedData());
+        
+        
         File.WriteAllText(Application.persistentDataPath + "/data.json", json);
     }
 
