@@ -17,12 +17,19 @@ public class Hud : MonoBehaviour
     private float elapstTime=0f;
     
     public TextMeshProUGUI Coin;
+    public TextMeshProUGUI TotalCoin;
+    
     private int coins;
+    public int totalCoins;
 
     public TextMeshProUGUI Score;
+    public TextMeshProUGUI HighestScore;
+    
     private int score;
+    public int highScore;
     public int CurrentScore => score;
 
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,14 +37,17 @@ public class Hud : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
     }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         startPos = player.position;
+        
+        // Call these AFTER Serializator has finished loading data in its Awake method
+        UpdateCoins();
+        UpdateTotalCoinsUI();
+        UpdateHighScoreUI();
     }
 
     // Update is called once per frame
@@ -56,7 +66,7 @@ public class Hud : MonoBehaviour
 
     private void updateDistance(float dist)
     {
-        distance.text = "Distance: \n" + dist.ToString("F0");
+        distance.text =dist.ToString("F0");
     }
 
     private void updateTime(float displaytime)
@@ -66,24 +76,52 @@ public class Hud : MonoBehaviour
         int miliseconds = Mathf.FloorToInt((displaytime % 1) * 100);
         
         
-        time.text = "Time: \n"+ string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, miliseconds);
+        time.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, miliseconds);
     }
 
     public void AddCoin()
     {
-        coins += 1;
+        coins += 1;      
+        totalCoins += 1; 
+        
         UpdateCoins();
+        UpdateTotalCoinsUI();
     }
 
     private void UpdateCoins()
     {
-        Coin.text = "Coins: "+coins;
+        Coin.text = $"{coins}";
+    }
+    
+    private void UpdateTotalCoinsUI()
+    {
+        if (TotalCoin != null)
+        {
+            TotalCoin.text = $"{totalCoins}";
+        }
     }
 
-    private void UpdateScore(int score)
+    private void UpdateScore(int currentScore)
     {
         if (Score == null) return;
 
-        Score.text = "Score: "+score;
+        Score.text = $"{currentScore}";
+
+        
+        if (currentScore > highScore)
+        {
+            highScore = currentScore;
+            
+            UpdateHighScoreUI();
+        }
+        
     }
+    private void UpdateHighScoreUI()
+    {
+        if (HighestScore != null)
+        {
+            HighestScore.text = $"{highScore}";
+        }
+    }
+    
 }

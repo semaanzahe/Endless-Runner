@@ -59,8 +59,9 @@ public class CanvasManager : MonoBehaviour
 
     public void Death()
     {
+        Serializator.instance.SerializeData();
         Time.timeScale = 0;
-        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PauseMusic();
         PauseMenu.SetActive(false);
         Hud.SetActive(false);
         DeathScreen.SetActive(true);
