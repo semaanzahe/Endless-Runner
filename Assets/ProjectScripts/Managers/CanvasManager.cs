@@ -10,6 +10,7 @@ public class CanvasManager : MonoBehaviour
     private GameObject DeathScreen;
     private GameObject Controls;
     private GameObject SwipeManager;
+    private GameObject DailyRewards;
 
     private bool swipe = true;
     
@@ -29,10 +30,12 @@ public class CanvasManager : MonoBehaviour
        DeathScreen.SetActive(false);
        Controls.SetActive(false);
        SwipeManager.SetActive(true);
+       DailyRewards.SetActive(false);
     }
 
     public void Pause()
     {
+        Serializator.instance.SerializeData();
         Time.timeScale = 0;
         AudioManager.Instance.PauseMusic();
         PauseMenu.SetActive(true);
@@ -42,6 +45,7 @@ public class CanvasManager : MonoBehaviour
     }
     public void Resume()
     {
+        Serializator.instance.SerializeData();
         Time.timeScale = 1;
         AudioManager.Instance.ResumeMusic();
         PauseMenu.SetActive(false);
@@ -67,6 +71,18 @@ public class CanvasManager : MonoBehaviour
         DeathScreen.SetActive(true);
         Controls.SetActive(false);
     }
+
+    public void OpenDailyRewards()
+    {
+        DailyRewards.SetActive(true);
+        Hud.SetActive(false);
+    }
+
+    public void CloseDailyRewards()
+    {
+        DailyRewards.SetActive(false);
+        Hud.SetActive(true);
+    }
     
     void GetReferences()
     {
@@ -85,6 +101,9 @@ public class CanvasManager : MonoBehaviour
         GameObject SwipeObject = GameObject.FindGameObjectWithTag("Swipe");
         if (SwipeObject != null)
             SwipeManager = SwipeObject;
+        GameObject DailyRewardsObject = GameObject.FindGameObjectWithTag("DailyRewards");
+        if (DailyRewardsObject != null)
+            DailyRewards = DailyRewardsObject;
         
             
     }

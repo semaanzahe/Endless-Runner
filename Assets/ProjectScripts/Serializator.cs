@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Serializator : MonoBehaviour
 {
-    
-    public static  Serializator instance;
+    public static Serializator instance;
     
     public string currentProfileName = "Astronaut_1";
     public int currentProfileNumber = 1;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -19,9 +18,7 @@ public class Serializator : MonoBehaviour
         }
 
         instance = this;
-        
-       // SerializeData();
-       DeserializeData();
+        DeserializeData();
     }
 
     public void SerializeData()
@@ -31,32 +28,16 @@ public class Serializator : MonoBehaviour
 
     private IEnumerator CaptureAndSaveRoutine()
     {
-        // 1. Wait until the very end of the frame so UI and gameplay elements are fully rendered
         yield return new WaitForEndOfFrame();
 
-        // 2. Capture the screen as a Texture2D
         Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
-
-        // 3. Encode the texture into PNG format bytes
         byte[] pngBytes = screenShot.EncodeToPNG();
-
-        // 4. Clean up the texture memory to prevent memory leaks
         Destroy(screenShot);
 
-        // 5. Save the image data using the save system
         SaveSystem.SaveThumbnail(pngBytes);
 
-        // 6. Now save your standard JSON progression data
-        SerializedData data = new SerializedData
-        {
-            profileName = currentProfileName,
-            profileNumber = currentProfileNumber,
-            highestScore = Hud.Instance.highScore,
-            totalCoins = Hud.Instance.totalCoins
-        };
-
-        string json = JsonUtility.ToJson(data);
-        SaveSystem.Save(json);
+        // Save JSON safely preserving existing fields
+        SaveDataWithoutScreenshot();
         
         Debug.Log("Profile and Thumbnail Saved Successfully.");
     }
@@ -64,18 +45,82 @@ public class Serializator : MonoBehaviour
     public void DeserializeData()
     {
         string saveString = SaveSystem.Load();
-        if (saveString != null)
+        if (!string.IsNullOrEmpty(saveString))
         {
             SerializedData data = JsonUtility.FromJson<SerializedData>(saveString);
             currentProfileName = data.profileName;
             currentProfileNumber = data.profileNumber;
-            Hud.Instance.highScore = data.highestScore;
-            Hud.Instance.totalCoins = data.totalCoins;
+            if (Hud.Instance != null)
+            {
+                Hud.Instance.highScore = data.highestScore;
+                Hud.Instance.totalCoins = data.totalCoins;
+            }
         }
         else
         {
-            Hud.Instance.highScore = 0;
-            Hud.Instance.totalCoins = 0;
+            if (Hud.Instance != null)
+            {
+                Hud.Instance.highScore = 0;
+                Hud.Instance.totalCoins = 0;
+            }
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveDataWithoutScreenshot();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveDataWithoutScreenshot();
+        }
+    }
+
+    // FIXED: Reads existing save file to keep lastClaimedDay & lastClaimTimeStamp intact
+    public void SaveDataWithoutScreenshot()
+    {
+        string json = SaveSystem.Load();
+        SerializedData data = !string.IsNullOrEmpty(json) 
+            ? JsonUtility.FromJson<SerializedData>(json) 
+            : new SerializedData();
+
+        data.profileName = currentProfileName;
+        data.profileNumber = currentProfileNumber;
+        if (Hud.Instance != null)
+        {
+            data.highestScore = Hud.Instance.highScore;
+            data.totalCoins = Hud.Instance.totalCoins;
+        }
+
+        SaveSystem.Save(JsonUtility.ToJson(data, true));
+    }
+    
+    public void AddCoinsAndSave(int amount)
+    {
+        string json = SaveSystem.Load();
+        SerializedData data = !string.IsNullOrEmpty(json) 
+            ? JsonUtility.FromJson<SerializedData>(json) 
+            : new SerializedData();
+
+        data.totalCoins += amount;
+
+        SaveSystem.Save(JsonUtility.ToJson(data, true));
+    }
+
+    public void SaveRewardProgress(int claimedDay, string timeStamp)
+    {
+        string json = SaveSystem.Load();
+        SerializedData data = !string.IsNullOrEmpty(json) 
+            ? JsonUtility.FromJson<SerializedData>(json) 
+            : new SerializedData();
+
+        data.lastClaimedDay = claimedDay;
+        data.lastClaimTimeStamp = timeStamp;
+
+        SaveSystem.Save(JsonUtility.ToJson(data, true));
+        Debug.Log($"[Serializator] Saved Day: {claimedDay} | Time: {timeStamp}");
     }
 }

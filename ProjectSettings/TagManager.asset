@@ -13,6 +13,13 @@ TagManager:
   - DeathScreen
   - Controls
   - Swipe
+  - DailyRewards
+  - Reward_Day
+  - Reward_Icon
+  - Reward_Total
+  - Reward
+  - Active_HighLight
+  - Claimed_HighLight
   layers:
   - Default
   - TransparentFX

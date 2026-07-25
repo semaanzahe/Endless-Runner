@@ -52,4 +52,18 @@ public static class SaveSystem
         
     }
     
+    public static void SaveClaimedDayAndTimestamp(int day, string timestamp)
+    {
+        string json = Load();
+        SerializedData data = !string.IsNullOrEmpty(json) 
+            ? JsonUtility.FromJson<SerializedData>(json) 
+            : new SerializedData();
+
+        data.lastClaimedDay = day;
+        data.lastClaimTimeStamp = timestamp;
+
+        string updatedJson = JsonUtility.ToJson(data, true);
+        Save(updatedJson);
+    }
+    
 }

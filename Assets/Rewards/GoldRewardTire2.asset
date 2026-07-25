@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cec4c6c859a4ce449a0db36be2576e0, type: 3}
+  m_Name: GoldRewardTire2
+  m_EditorClassIdentifier: Assembly-CSharp::DailyRewardSO
+  rewardAmount: 1000
+  rewardType: 0
+  icon: {fileID: 7032092757170396684, guid: a642e5052e22d4c49ade315985bd3fb2, type: 3}
