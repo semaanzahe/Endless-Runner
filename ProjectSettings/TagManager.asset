@@ -20,6 +20,8 @@ TagManager:
   - Reward
   - Active_HighLight
   - Claimed_HighLight
+  - Settings
+  - Quests
   layers:
   - Default
   - TransparentFX
