@@ -78,7 +78,19 @@ public class Serializator : MonoBehaviour
             SaveDataWithoutScreenshot();
         }
     }
+    public void CreateNewProfile(int profileNumber = 1, string profileName = "Astronaut")
+    {
+        // 1. Tell SaveSystem to build the new JSON file
+        SaveSystem.CreateNewSave(profileNumber, profileName);
 
+        // 2. Set current runtime variables to match
+        currentProfileNumber = profileNumber;
+        currentProfileName = $"{profileName}_{profileNumber}";
+
+        // 3. Load that fresh data into your HUD/Game
+        DeserializeData();
+    }
+    
     // FIXED: Reads existing save file to keep lastClaimedDay & lastClaimTimeStamp intact
     public void SaveDataWithoutScreenshot()
     {
@@ -123,4 +135,6 @@ public class Serializator : MonoBehaviour
         SaveSystem.Save(JsonUtility.ToJson(data, true));
         Debug.Log($"[Serializator] Saved Day: {claimedDay} | Time: {timeStamp}");
     }
+    
+    
 }

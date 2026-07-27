@@ -20,7 +20,29 @@ public static class SaveSystem
     // The UI buttons call this to change the active file target
     public static void SetActiveProfile(int profileNumber)
     {
+        currentProfileIndex = profileNumber; 
         currentSaveFileName = $"profile_{profileNumber}.json";
+    }
+    
+    public static void CreateNewSave(int profileNumber, string profileName)
+    {
+        Init();
+        SetActiveProfile(profileNumber);
+
+        // Create a fresh default instance
+        SerializedData newSaveData = new SerializedData
+        {
+            profileNumber = profileNumber,
+            profileName = profileName,
+            totalCoins = 0,
+            highestScore = 0,
+            lastClaimedDay = -1,
+            lastClaimTimeStamp = ""
+        };
+
+        string json = JsonUtility.ToJson(newSaveData, true);
+        Save(json);
+        Debug.Log($"[SaveSystem] Created brand new save slot: profile_{profileNumber}.json");
     }
 
     public static void SaveThumbnail(byte[] imageBytes)

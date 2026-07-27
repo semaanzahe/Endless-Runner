@@ -60,6 +60,7 @@ public class CanvasManager : MonoBehaviour
         
         PauseMenu.SetActive(false);
         Hud.SetActive(true);
+        Settings.SetActive(false);
         
         if (swipe)
         {
