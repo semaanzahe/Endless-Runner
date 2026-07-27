@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void TryCollectCoin(GameObject otherObject)
+    public void TryCollectCoin(GameObject otherObject)
     {
         if (otherObject == null || !otherObject.activeSelf || !otherObject.CompareTag("Coin")) return;
 
