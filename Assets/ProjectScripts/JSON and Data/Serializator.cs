@@ -6,8 +6,8 @@ public class Serializator : MonoBehaviour
 {
     public static Serializator instance;
     
-    public string currentProfileName = "Astronaut_1";
-    public int currentProfileNumber = 1;
+    public string currentProfileName = "Astronaut";
+    public int currentProfileNumber = 0;
 
     void Awake()
     {
@@ -50,6 +50,10 @@ public class Serializator : MonoBehaviour
             SerializedData data = JsonUtility.FromJson<SerializedData>(saveString);
             currentProfileName = data.profileName;
             currentProfileNumber = data.profileNumber;
+
+            // Keep SaveSystem synchronized with the active profile!
+            SaveSystem.SetActiveProfile(currentProfileName, currentProfileNumber);
+
             if (Hud.Instance != null)
             {
                 Hud.Instance.highScore = data.highestScore;
@@ -58,6 +62,9 @@ public class Serializator : MonoBehaviour
         }
         else
         {
+            // Ensure new default saves use matching profile name and index
+            SaveSystem.SetActiveProfile(currentProfileName, currentProfileNumber);
+
             if (Hud.Instance != null)
             {
                 Hud.Instance.highScore = 0;
@@ -78,20 +85,8 @@ public class Serializator : MonoBehaviour
             SaveDataWithoutScreenshot();
         }
     }
-    public void CreateNewProfile(int profileNumber = 1, string profileName = "Astronaut")
-    {
-        // 1. Tell SaveSystem to build the new JSON file
-        SaveSystem.CreateNewSave(profileNumber, profileName);
-
-        // 2. Set current runtime variables to match
-        currentProfileNumber = profileNumber;
-        currentProfileName = $"{profileName}_{profileNumber}";
-
-        // 3. Load that fresh data into your HUD/Game
-        DeserializeData();
-    }
     
-    // FIXED: Reads existing save file to keep lastClaimedDay & lastClaimTimeStamp intact
+    
     public void SaveDataWithoutScreenshot()
     {
         string json = SaveSystem.Load();
@@ -99,7 +94,7 @@ public class Serializator : MonoBehaviour
             ? JsonUtility.FromJson<SerializedData>(json) 
             : new SerializedData();
 
-        data.profileName = currentProfileName;
+        data.profileName = $"{currentProfileName}_{currentProfileNumber}";
         data.profileNumber = currentProfileNumber;
         if (Hud.Instance != null)
         {

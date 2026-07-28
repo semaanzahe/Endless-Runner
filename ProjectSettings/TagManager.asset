@@ -23,6 +23,7 @@ TagManager:
   - Settings
   - Quests
   - MagBox
+  - SkyboxCamera
   layers:
   - Default
   - TransparentFX
@@ -30,10 +31,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - CoinCollector
+  - Coin
+  - Obstacle
   - 
   - 
   - 

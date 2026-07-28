@@ -11089,8 +11089,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74952f6b2e55bba4c9ff843511f0c5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentProfileName: Astronaut_1
-  currentProfileNumber: 1
+  currentProfileName: Astronaut
+  currentProfileNumber: 0
 --- !u!4 &1420898130
 Transform:
   m_ObjectHideFlags: 0
@@ -15392,20 +15392,40 @@ PrefabInstance:
       value: Stylized Astronaut
       objectReference: {fileID: 0}
     - target: {fileID: 7016729692601905532, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016729692601905532, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: m_TagString
       value: MagBox
       objectReference: {fileID: 0}
     - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: m_Size.x
-      value: 0.2015831
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: m_Size.y
-      value: 0.3
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
       propertyPath: m_Size.z
-      value: 0.10133943
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394391308393336692, guid: 4be7a99d429a19840a38df28f88a8680, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

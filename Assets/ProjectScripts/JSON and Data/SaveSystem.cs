@@ -1,13 +1,13 @@
 using System.IO;
 using UnityEngine;
-using FxResources.System.IO;
 
 public static class SaveSystem
 {
     public static readonly string SAVE_FOLDER = Application.persistentDataPath + "/Saves/";
     
-    private static string currentSaveFileName = "save_1.json";
-    private static int currentProfileIndex = 1;
+    // Tracks the current file name 
+    private static string currentSaveFileName = "Astronaut";
+    private static int currentProfileIndex = 0;
     
     public static void Init()
     {
@@ -15,42 +15,44 @@ public static class SaveSystem
         {
             Directory.CreateDirectory(SAVE_FOLDER);
         }
-        
     }
-    // The UI buttons call this to change the active file target
-    public static void SetActiveProfile(int profileNumber)
+
+    // Call this using the custom profile name!
+    public static void SetActiveProfile(string profileName, int profileIndex)
     {
-        currentProfileIndex = profileNumber; 
-        currentSaveFileName = $"profile_{profileNumber}.json";
+        currentProfileIndex = profileIndex;
+        // Replaces any invalid file name characters with an underscore for safety
+        string safeFileName = string.Join("_", profileName.Split(Path.GetInvalidFileNameChars()));
+        currentSaveFileName = $"{safeFileName}.json";
     }
-    
+
     public static void CreateNewSave(int profileNumber, string profileName)
     {
         Init();
-        SetActiveProfile(profileNumber);
+        SetActiveProfile(profileName, profileNumber);
 
-        // Create a fresh default instance
-        SerializedData newSaveData = new SerializedData
+        SerializedData newData = new SerializedData
         {
             profileNumber = profileNumber,
             profileName = profileName,
             totalCoins = 0,
             highestScore = 0,
-            lastClaimedDay = -1,
+            lastClaimedDay = 0,
             lastClaimTimeStamp = ""
         };
 
-        string json = JsonUtility.ToJson(newSaveData, true);
+        string json = JsonUtility.ToJson(newData, true);
         Save(json);
-        Debug.Log($"[SaveSystem] Created brand new save slot: profile_{profileNumber}.json");
+
+        Debug.Log($"[SaveSystem] Created file at: {Path.Combine(SAVE_FOLDER, currentSaveFileName)}");
     }
 
     public static void SaveThumbnail(byte[] imageBytes)
     {
         Init();
+        // Uses currentProfileIndex for thumbnail tracking
         string imagePath = Path.Combine(SAVE_FOLDER, $"profile_{currentProfileIndex}.png");
         File.WriteAllBytes(imagePath, imageBytes);
-        Debug.Log($"Thumbnail saved to: {imagePath}");
     }
     
     public static void Save(string saveString)
@@ -62,7 +64,6 @@ public static class SaveSystem
 
     public static string Load()
     {
-
         Init();
         string fullPath = Path.Combine(SAVE_FOLDER, currentSaveFileName);
 
@@ -71,21 +72,5 @@ public static class SaveSystem
             return File.ReadAllText(fullPath);
         }
         return null;
-        
     }
-    
-    public static void SaveClaimedDayAndTimestamp(int day, string timestamp)
-    {
-        string json = Load();
-        SerializedData data = !string.IsNullOrEmpty(json) 
-            ? JsonUtility.FromJson<SerializedData>(json) 
-            : new SerializedData();
-
-        data.lastClaimedDay = day;
-        data.lastClaimTimeStamp = timestamp;
-
-        string updatedJson = JsonUtility.ToJson(data, true);
-        Save(updatedJson);
-    }
-    
 }
