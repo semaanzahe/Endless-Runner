@@ -37,17 +37,18 @@ public class MissionStage
     public MissionRewardType rewardType = MissionRewardType.Keys;
 }
 
-[CreateAssetMenu(fileName = "Achievement_", menuName = "Missions/AchievementSO")]
+[CreateAssetMenu(fileName = "Quests_", menuName = "Missions/QuestSO")]
 public class QuestSO : ScriptableObject
 {
-    [Header("Achievement Identity")]
-    public string achievementID; // Unique ID for JSON save (e.g. "ach_no_acrobatics")
+    [Header("Quest Identity")]
+    public string questID; // Unique ID for JSON save
     public string title;
     [TextArea(2, 4)] public string description;
     public Sprite icon;
-
+    public Sprite rewardIcon;
+    
     [Header("Rules & Constraints")]
-    public MissionType missionType;
+    public MissionType questType;
     public ExecutionScope executionScope = ExecutionScope.InOneRun;
     public MissionConstraint constraint = MissionConstraint.None;
 
