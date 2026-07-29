@@ -37,6 +37,7 @@ public static class SaveSystem
             profileName = profileName,
             totalCoins = 0,
             highestScore = 0,
+            scoreMultiplier = 1,
             lastClaimedDay = 0,
             lastClaimTimeStamp = ""
         };
@@ -73,4 +74,24 @@ public static class SaveSystem
         }
         return null;
     }
+    public static bool HasAnySaves()
+    {
+        // 1. Ensure SAVE_FOLDER string is valid
+        if (string.IsNullOrEmpty(SAVE_FOLDER))
+        {
+            return false;
+        }
+
+        // 2. Check if directory exists
+        if (!Directory.Exists(SAVE_FOLDER))
+        {
+            return false;
+        }
+
+        // 3. Search for any .json save files inside the directory
+        string[] saveFiles = Directory.GetFiles(SAVE_FOLDER, "*.json");
+        
+        return saveFiles.Length > 0;
+    }
+    
 }

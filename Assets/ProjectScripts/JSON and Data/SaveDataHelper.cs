@@ -15,6 +15,9 @@ public class SaveDataHelper : MonoBehaviour
     [SerializeField] private Transform slotsParent;
 
     private int selectedProfileIndex = -1;
+    
+    private string defaultProfileName = "Astronaut";
+    private int defaultProfileNumber = 0;
 
     private void Start()
     {
@@ -57,8 +60,14 @@ public class SaveDataHelper : MonoBehaviour
             // --- SAVE FILE EXISTS ---
             Debug.Log($"Loading save file for '{existingData.profileName}'...");
 
-            // Set active profile using saved name and slot index
-            SaveSystem.SetActiveProfile(existingData.profileName, slotIndex);
+            if (Serializator.instance != null)
+            {
+                Serializator.instance.currentProfileNumber = slotIndex; 
+                Serializator.instance.currentProfileName = profileNameInput.text;  
+            }
+            
+            // Then set active profile on SaveSystem:
+            SaveSystem.SetActiveProfile(profileNameInput.text, slotIndex);
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
@@ -132,5 +141,49 @@ public class SaveDataHelper : MonoBehaviour
                 buttonText.text = $"[ Empty Slot {slotIndex} ]";
             }
         }
+    }
+    public void OnTapToPlayPressed()
+    {
+        // Check if any save files exist in the folder
+        bool saveExists = SaveSystem.HasAnySaves(); // Or check Directory.GetFiles(SaveSystem.SAVE_FOLDER, "*.json").Length > 0
+
+        if (!saveExists)
+        {
+            // NO SAVES FOUND: Set up and create Slot 0 as a brand-new save profile
+            SaveSystem.CreateNewSave(defaultProfileNumber, defaultProfileName);
+
+            if (Serializator.instance != null)
+            {
+                Serializator.instance.currentProfileName = defaultProfileName;
+                Serializator.instance.currentProfileNumber = defaultProfileNumber;
+            
+                // Explicitly create the initial save file so future loads find it
+                Serializator.instance.SaveDataWithoutScreenshot();
+            }
+
+            Debug.Log($"[TapToPlay] No save found. Created default save profile: {defaultProfileName} at Slot {defaultProfileNumber}");
+        }
+        else
+        {
+            // SAVE EXISTS: Load Slot 0 (the first save profile)
+            SaveSystem.SetActiveProfile(defaultProfileName, defaultProfileNumber);
+
+            if (Serializator.instance != null)
+            {
+                Serializator.instance.currentProfileName = defaultProfileName;
+                Serializator.instance.currentProfileNumber = defaultProfileNumber;
+                Serializator.instance.DeserializeData(); // Load the existing data into memory
+            }
+
+            Debug.Log($"[TapToPlay] Loaded existing save slot: {defaultProfileName}");
+        }
+
+        // Launch into your gameplay scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameplayScene");
+    }
+
+    public void CloseCreateProfilePanel()
+    {
+        createProfilePanel.SetActive(false);
     }
 }

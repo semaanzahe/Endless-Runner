@@ -48,8 +48,9 @@ public class QuestUIItem : MonoBehaviour
 
         if (progressBar != null)
         {
+            progressBar.minValue = 0;
             progressBar.maxValue = target;
-            progressBar.value = Mathf.Min(currentProgress, target);
+            progressBar.value = Mathf.Min(progress, target);
         }
 
         // 3. Rewards & Claim Button

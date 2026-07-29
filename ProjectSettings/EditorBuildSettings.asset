@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Menu.unity
     guid: da4ec4ff515a9a84f8846dabf532e1d2
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/SpaceRunner.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 12dac51aeb809c24096b9a4f1228d7ed, type: 2}

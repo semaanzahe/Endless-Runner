@@ -11,6 +11,7 @@ public class CanvasManager : MonoBehaviour
     private GameObject SwipeManager;
     private GameObject DailyRewards;
     private GameObject Settings;
+    private GameObject Quests;
 
     private bool swipe = true;
     
@@ -38,6 +39,7 @@ public class CanvasManager : MonoBehaviour
         SwipeManager.SetActive(true);
         DailyRewards.SetActive(false);
         Settings.SetActive(false);
+        Quests.SetActive(false);
     }
 
     public void Pause()
@@ -119,15 +121,32 @@ public class CanvasManager : MonoBehaviour
 
     public void OpenDailyRewards()
     {
+        Time.timeScale = 0;
         DailyRewards.SetActive(true);
         Hud.SetActive(false);
     }
 
     public void CloseDailyRewards()
     {
+        Time.timeScale = 1;
         DailyRewards.SetActive(false);
         Hud.SetActive(true);
     }
+
+    public void OpenQuests()
+    {
+        Time.timeScale = 0;
+        Quests.SetActive(true);
+        Hud.SetActive(false);
+    }
+
+    public void CloseQuests()
+    {
+        Time.timeScale = 1;
+        Quests.SetActive(false);
+        Hud.SetActive(true);
+    }
+    
 
     public void Quit()
     {
@@ -156,6 +175,9 @@ public class CanvasManager : MonoBehaviour
 
         GameObject SettingsObject = GameObject.FindGameObjectWithTag("Settings");
         if (SettingsObject != null) Settings = SettingsObject;
+        
+        GameObject QuestsObject = GameObject.FindGameObjectWithTag("Quests");
+        if (QuestsObject != null) Quests = QuestsObject;
     }
 
     public void ToggleSwipe()

@@ -7,26 +7,36 @@ public class Hud : MonoBehaviour
 {
     
     public static Hud Instance;
-    public Transform player;
-    
+
+    [Header("References")]
+    [SerializeField] private Transform player;
+
     private Vector3 startPos;
-    
-     public TextMeshProUGUI distance;
-     
+
+    [Header("UI Text References")]
+    public TextMeshProUGUI distance;
     public TextMeshProUGUI time;
-    private float elapstTime=0f;
-    
     public TextMeshProUGUI Coin;
     public TextMeshProUGUI TotalCoin;
-    
-    private int coins;
-    public int totalCoins;
-
     public TextMeshProUGUI Score;
     public TextMeshProUGUI HighestScore;
-    
-    private int score;
+
+    [Header("Runtime Tracker Values")]
+    private float elapstTime = 0f;
+    private int coins;
+
+    // Persistent data saved across sessions
+    [Header("Saved Values")]
+    public int totalCoins;
     public int highScore;
+
+    [Header("Score Settings")]
+    [HideInInspector] 
+    public int scoreMultiplier = 1;
+
+    private int score;
+
+    // C# Expression-bodied property (automatically hidden from the Inspector)
     public int CurrentScore => score;
 
     
@@ -60,6 +70,10 @@ public class Hud : MonoBehaviour
         updateDistance(dist);
         UpdateCoins();
          score = (int)(coins*10+elapstTime+(int)dist);
+         if (QuestManager.Instance != null)
+         {
+             QuestManager.Instance.AddProgress(MissionType.Score, score);
+         }
         UpdateScore(score);
     }
 
@@ -105,7 +119,7 @@ public class Hud : MonoBehaviour
     {
         if (Score == null) return;
 
-        Score.text = $"{currentScore}";
+        Score.text = $"{currentScore*scoreMultiplier}";
 
         
         if (currentScore > highScore)

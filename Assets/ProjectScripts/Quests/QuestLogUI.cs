@@ -3,37 +3,35 @@ using UnityEngine;
 
 public class QuestUIManager : MonoBehaviour
 {
-    public static QuestUIManager Instance;
-
     [Header("UI References")]
-    [SerializeField] private Transform questContainer; // Parent Transform (e.g. Content inside ScrollView)
-    [SerializeField] private GameObject questItemPrefab; // Prefab with QuestUIItem attached
+    [SerializeField] private Transform questContainer; // Assign QuestsLayout here
+    [SerializeField] private GameObject questItemPrefab; // Assign your Quest Prefab here
 
     private List<QuestUIItem> spawnedItems = new List<QuestUIItem>();
 
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
-
     private void OnEnable()
     {
+        // Subscribe to QuestManager events
+        QuestManager.OnQuestProgressUpdated += RefreshUI;
         RefreshUI();
+    }
+
+    private void OnDisable()
+    {
+        // Always unsubscribe on disable to avoid memory leaks!
+        QuestManager.OnQuestProgressUpdated -= RefreshUI;
     }
 
     public void RefreshUI()
     {
         if (QuestManager.Instance == null) return;
 
-        // Clear existing spawned slots
         foreach (var item in spawnedItems)
         {
             if (item != null) Destroy(item.gameObject);
         }
         spawnedItems.Clear();
 
-        // Populate slots for all registered Quests
         List<QuestSO> allQuests = QuestManager.Instance.GetAllQuests();
 
         foreach (QuestSO quest in allQuests)

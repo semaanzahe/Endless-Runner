@@ -48,31 +48,26 @@ public class Serializator : MonoBehaviour
         if (!string.IsNullOrEmpty(saveString))
         {
             SerializedData data = JsonUtility.FromJson<SerializedData>(saveString);
+        
             currentProfileName = data.profileName;
             currentProfileNumber = data.profileNumber;
 
-            // Keep SaveSystem synchronized with the active profile!
             SaveSystem.SetActiveProfile(currentProfileName, currentProfileNumber);
 
-            if (Hud.Instance != null)
+            if (Hud.Instance != null && data != null)
             {
                 Hud.Instance.highScore = data.highestScore;
                 Hud.Instance.totalCoins = data.totalCoins;
+                Hud.Instance.scoreMultiplier = data.scoreMultiplier;
             }
-        }
-        else
-        {
-            // Ensure new default saves use matching profile name and index
-            SaveSystem.SetActiveProfile(currentProfileName, currentProfileNumber);
-
-            if (Hud.Instance != null)
+            if (QuestManager.Instance != null && data != null)
             {
-                Hud.Instance.highScore = 0;
-                Hud.Instance.totalCoins = 0;
+                QuestManager.Instance.LoadSaveData(data.questProgressList);
             }
         }
     }
 
+    
     private void OnApplicationQuit()
     {
         SaveDataWithoutScreenshot();
@@ -89,19 +84,37 @@ public class Serializator : MonoBehaviour
     
     public void SaveDataWithoutScreenshot()
     {
+        // 1. Check if a save file exists
         string json = SaveSystem.Load();
-        SerializedData data = !string.IsNullOrEmpty(json) 
-            ? JsonUtility.FromJson<SerializedData>(json) 
-            : new SerializedData();
 
-        data.profileName = $"{currentProfileName}_{currentProfileNumber}";
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("[Serializator] Save attempt aborted: No existing save file found.");
+            return; // Safe exit—does nothing if no save file exists
+        }
+
+        // 2. Deserialize existing save file data
+        SerializedData data = JsonUtility.FromJson<SerializedData>(json);
+
+        // 3. Update active profile identifiers
+        data.profileName = currentProfileName;
         data.profileNumber = currentProfileNumber;
+
+        // 4. Update HUD stats if available
         if (Hud.Instance != null)
         {
             data.highestScore = Hud.Instance.highScore;
             data.totalCoins = Hud.Instance.totalCoins;
+            data.scoreMultiplier = Hud.Instance.scoreMultiplier;
         }
 
+        // 5. Update quest progress if available
+        if (QuestManager.Instance != null)
+        {
+            data.questProgressList = QuestManager.Instance.GetSaveData();
+        }
+
+        // 6. Save updated data back to disk
         SaveSystem.Save(JsonUtility.ToJson(data, true));
     }
     

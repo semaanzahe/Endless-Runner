@@ -93,6 +93,10 @@ public class PlayerMovement : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX3D(SFXType.CoinPickup, transform.position,2);
             hud.AddCoin();
+            if (QuestManager.Instance != null)
+            {
+                QuestManager.Instance.AddProgress(MissionType.CoinsCollected, 1);
+            }
         }
     }
     

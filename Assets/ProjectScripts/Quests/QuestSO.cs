@@ -37,7 +37,7 @@ public class MissionStage
     public MissionRewardType rewardType = MissionRewardType.Keys;
 }
 
-[CreateAssetMenu(fileName = "Quests_", menuName = "Missions/QuestSO")]
+[CreateAssetMenu(fileName = "Quest_", menuName = "Missions/QuestSO")]
 public class QuestSO : ScriptableObject
 {
     [Header("Quest Identity")]
