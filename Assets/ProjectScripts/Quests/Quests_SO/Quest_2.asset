@@ -16,17 +16,17 @@ MonoBehaviour:
   title: Coin Colector
   description: Colect the coins and to grant your self a score multiplier
   icon: {fileID: 6819147291191527595, guid: f9b444f36254bc143a8d9c17a3e8bc84, type: 3}
-  rewardIcon: {fileID: 6819147291191527595, guid: f9b444f36254bc143a8d9c17a3e8bc84, type: 3}
+  rewardIcon: {fileID: 21300000, guid: 747257c37c9d57345a0307b9feef5b8b, type: 3}
   questType: 1
   executionScope: 1
   constraint: 0
   stages:
-  - targetAmount: 500
+  - targetAmount: 100
     rewardAmount: 2
     rewardType: 2
-  - targetAmount: 1000
+  - targetAmount: 200
     rewardAmount: 3
     rewardType: 1
-  - targetAmount: 1500
+  - targetAmount: 300
     rewardAmount: 5
     rewardType: 1

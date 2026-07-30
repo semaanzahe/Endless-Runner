@@ -37,9 +37,11 @@ public class PowerUpsTrigger : MonoBehaviour
 
         if (powerUp != null)
         {
+            // First apply effect & update UI
             powerUp.ApplyPowerUP(other.gameObject);
         }
-
+        
+        // Then recycle back to pool
         ReturnToPool();
     }
 }

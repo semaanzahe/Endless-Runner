@@ -73,6 +73,7 @@ public class DifficultyManager : MonoBehaviour
         QueuePowerUpsByScore();
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void UpdateDifficultyFromScore()
     {
         int score = hud != null ? hud.CurrentScore : 0;

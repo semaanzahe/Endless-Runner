@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -27,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetInteger("Run", 1);
         }
+
+        IsInvinsible = false;
     }
 
     private void FixedUpdate()
@@ -61,29 +64,41 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         TryCollectCoin(other.gameObject);
+        //KillBox(other.gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         TryCollectCoin(collision.gameObject);
+        KillBox(collision.gameObject);
+        IsOnGround(collision.gameObject);
+    }
 
-        if (collision.gameObject.tag == "Platform"||collision.gameObject.tag == "Box")
+    void IsOnGround(GameObject ground)
+    {
+        if (ground.CompareTag("Platform") || ground.CompareTag("Box"))
         {
             onGround = true;
         }
-
-        if (collision.gameObject.CompareTag("KillBox")&&!IsInvinsible)
+    }
+    
+    void KillBox(GameObject box)
+    {
+        Debug.Log($"KillBox called on {box.name}, invincible={IsInvinsible}");
+        if (box.CompareTag("KillBox"))
         {
-            CanvasManager.instance.Death();
-            AudioManager.Instance.PlaySFX3D(SFXType.GameOver,transform.position);
-        }
-        else if(collision.gameObject.CompareTag("KillBox") && IsInvinsible)
-        {
-            GameObject.FindWithTag("Box").SetActive(false);
-            IsInvinsible = false;
+            if (!IsInvinsible)
+            {
+                // Player dies when not invincible
+                CanvasManager.instance.Death();
+                AudioManager.Instance.PlaySFX3D(SFXType.GameOver, transform.position);
+            }
+            else
+            {
+                box.SetActive(false);
+            }
         }
     }
-
     public void TryCollectCoin(GameObject otherObject)
     {
         if (otherObject == null || !otherObject.activeSelf || !otherObject.CompareTag("Coin")) return;
@@ -99,6 +114,21 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public void ApplyPowerUp(float duration)
+    {
+        StopAllCoroutines();
+        StartCoroutine(ApplyPowerUpTimer(duration));
+    }
+
+    IEnumerator ApplyPowerUpTimer(float duration)
+    {
+        Debug.Log("Invinsible");
+        IsInvinsible = true;
+
+        yield return new WaitForSeconds(duration);
+
+        IsInvinsible = false;
+    }
     
-    
+
 }

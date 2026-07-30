@@ -29,13 +29,13 @@ public class SwipeDetect : MonoBehaviour
                 if (swipeDiraction.x > 0)
                 {
                     swipeDiraction.Normalize();
-                    Debug.Log($"Swipe Detected! direction: {swipeDiraction.magnitude}");
+                    //Debug.Log($"Swipe Detected! direction: {swipeDiraction.magnitude}");
                     Player.MoveRight();
                 }
                 else if(swipeDiraction.x < 0)
                 {
                     swipeDiraction.Normalize();
-                    Debug.Log($"Swipe Detected! direction: {swipeDiraction}");
+                    //Debug.Log($"Swipe Detected! direction: {swipeDiraction}");
                     Player.MoveLeft();
                 }
                 if (swipeDiraction.y > 0.74)

@@ -118,17 +118,16 @@ public class Hud : MonoBehaviour
     private void UpdateScore(int currentScore)
     {
         if (Score == null) return;
-
-        Score.text = $"{currentScore*scoreMultiplier}";
-
         
-        if (currentScore > highScore)
+        int finalScore = currentScore * scoreMultiplier;
+        
+        Score.text = $"{finalScore}";
+        
+        if (finalScore > highScore)
         {
-            highScore = currentScore;
-            
+            highScore = finalScore;
             UpdateHighScoreUI();
         }
-        
     }
     private void UpdateHighScoreUI()
     {

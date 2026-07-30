@@ -15,7 +15,7 @@ public class DifficultySystem : ScriptableObject
     [Header("Power Ups")]
     [Min(1)] public int powerUpSpawnScoreInterval = 500;
     [FormerlySerializedAs("allowedCollectables")]
-    public List<PowerUp> allowedPowerUps = new List<PowerUp>();
+    public List<GameObject> allowedPowerUps = new List<GameObject>();
 
     [Header("Platform Look")]
     public Color platformColor = Color.white;

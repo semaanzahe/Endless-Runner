@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63882ebaa41786c48be519e5ba266a97, type: 3}
-  m_Name: New Power Up
-  m_EditorClassIdentifier: 
-  collectableName: 
+  m_Name: Shield
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUp
+  collectableName: Shield
   collectableDescription: 
-  collectableDuration: 0
+  collectableDuration: 5
   powerUp: 0

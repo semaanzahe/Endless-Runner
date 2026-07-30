@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0c7caf58e5e7e47af094107416164b, type: 3}
   m_Name: DifficultyLevel-Medium
   m_EditorClassIdentifier: Assembly-CSharp::DifficultySystem
-  spawnRate: 0.65
+  spawnRate: 0.4
   movementSpeed: 10
   maxObstacles: 5
   allowedObstacleTypes:
@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 4031840817476587876, guid: af81e60cad1e1dc46b676573093849ef, type: 3}
   powerUpSpawnScoreInterval: 500
   allowedPowerUps:
-  - {fileID: 11400000, guid: bdf02e664e9292a4a94051cb4c034d9f, type: 2}
+  - {fileID: 8050537342152234946, guid: 50e260f821baa56419af96b848301e5d, type: 3}
+  - {fileID: 8475833574052523601, guid: a1614f0cf649e3a4e894d20bda9008e7, type: 3}
   platformColor: {r: 0.4980392, g: 1, b: 0.8313726, a: 1}
   wallColor: {r: 0.4980392, g: 1, b: 0.8313726, a: 1}
