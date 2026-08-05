@@ -142,14 +142,14 @@ public class DifficultyManager : MonoBehaviour
         }
     }
 
-    public void TrySpawnQueuedPowerUpOnCoinPlatform(CoinsGenerator coinsGenerator)
+    public void TrySpawnQueuedPowerUpOnCoinPlatform(PlatformPopulator platformPopulator)
     {
         if (pendingPowerUpSpawns <= 0) return;
-        if (CurrentDifficulty == null || powerUpsGenerator == null || coinsGenerator == null) return;
+        if (CurrentDifficulty == null || powerUpsGenerator == null || platformPopulator == null) return;
         if (CurrentDifficulty.allowedPowerUps == null || CurrentDifficulty.allowedPowerUps.Count == 0) return;
-        if (!coinsGenerator.HasCoinsOnPlatform()) return;
+        if (!platformPopulator.HasCoinsOnPlatform) return;
 
-        if (!coinsGenerator.TryGetEmptyLaneSpawnPoint(out Transform spawnPoint)) return;
+        if (!platformPopulator.TryGetEmptyLaneSpawnPoint(out Transform spawnPoint)) return;
 
         bool spawned = powerUpsGenerator.SpawnPowerUpOnSpawnPoint(CurrentDifficulty.allowedPowerUps, spawnPoint);
         if (!spawned) return;
@@ -177,13 +177,13 @@ public class DifficultyManager : MonoBehaviour
 
     private void ApplyObstaclesDifficulty(DifficultySystem difficulty)
     {
-        if (PlatformPoolingSystem.instance == null) return;
+        if (ObjectPooler.instance == null) return;
 
-        Transform platformsRoot = PlatformPoolingSystem.instance.transform;
+        Transform platformsRoot = ObjectPooler.instance.transform;
         for (int i = 0; i < platformsRoot.childCount; i++)
         {
             Transform platformTransform = platformsRoot.GetChild(i);
-            ObstaclesGenerator obstaclesGenerator = platformTransform.GetComponent<ObstaclesGenerator>();
+            PlatformPopulator obstaclesGenerator = platformTransform.GetComponent<PlatformPopulator>();
             if (obstaclesGenerator != null)
             {
                 obstaclesGenerator.ApplyDifficulty(difficulty);
@@ -193,9 +193,9 @@ public class DifficultyManager : MonoBehaviour
 
     private void ApplyPlatformColors(DifficultySystem difficulty)
     {
-        if (PlatformPoolingSystem.instance == null) return;
+        if (ObjectPooler.instance == null) return;
 
-        Transform platformsRoot = PlatformPoolingSystem.instance.transform;
+        Transform platformsRoot = ObjectPooler.instance.transform;
         for (int i = 0; i < platformsRoot.childCount; i++)
         {
             Transform platformTransform = platformsRoot.GetChild(i);

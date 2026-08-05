@@ -397,12 +397,7 @@ GameObject:
   - component: {fileID: 355429074964704863}
   - component: {fileID: 2206354495153020678}
   - component: {fileID: 7097320870350414620}
-  - component: {fileID: -183464977792163801}
-  - component: {fileID: 7904083771367521401}
-  - component: {fileID: 7412467639201123401}
-  - component: {fileID: 7412467639201123402}
-  - component: {fileID: 7412467639201123403}
-  - component: {fileID: 7412467639201123404}
+  - component: {fileID: 877875552285930326}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Platform
@@ -510,7 +505,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 0.093364, z: 2}
   m_Center: {x: 0, y: 0.0009279996, z: 0}
---- !u!114 &-183464977792163801
+--- !u!114 &877875552285930326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -519,110 +514,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 5981760081311846903}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4d6905adfdab624380ee9e1a83bc46b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a958e3f79c23d5498b0de36b90b66f3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CoinsGenerator
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformPopulator
   lines:
   - {fileID: 7266545270782380441}
   - {fileID: 6527171091592108456}
   - {fileID: 3423927723194750404}
---- !u!114 &7904083771367521401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5981760081311846903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef6e400021cd20146976f7c7b2d2a654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CoinsPoolingSystem
-  CoinPrefab: {fileID: 7666318594349521552, guid: 4a388a34793dabc40be371f9b794760a, type: 3}
-  linesCount: 3
-  spawnAreasAmount: 3
-  platformAmount: 15
---- !u!114 &7412467639201123401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5981760081311846903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9d7cf0e8b74f79ab5f9ca8d5f5a321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentGenerator
-  farSpawnPoints:
-  - {fileID: 1729764910521013871}
-  - {fileID: 7344017650300883540}
-  middleSpawnPoints:
-  - {fileID: 2977771095231926191}
-  - {fileID: 6104987912780237716}
-  spawnChance: 1
---- !u!114 &7412467639201123402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5981760081311846903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0c26bf0f5a54cbeb1abf8f2f637ad44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentPoolingSystem
-  farObjectsPrefabs:
-  - {fileID: 919132149155446097, guid: e1bafa7b29944784199a874dd357f4fc, type: 3}
-  - {fileID: 919132149155446097, guid: 645e4a0e294749a4c8ca77238b4a35e8, type: 3}
-  - {fileID: 919132149155446097, guid: c380384fb4117184aae908cfe1d8c44a, type: 3}
-  - {fileID: 919132149155446097, guid: 910fa56120f7f2e4dba53696d27031b3, type: 3}
-  - {fileID: 919132149155446097, guid: f08fa6a4f6d242c43999efe35cbe7fc5, type: 3}
-  - {fileID: 919132149155446097, guid: 910fa56120f7f2e4dba53696d27031b3, type: 3}
-  - {fileID: 919132149155446097, guid: 62d266306df6b61459c3364200035676, type: 3}
-  - {fileID: 919132149155446097, guid: b2b8027de43bd314db2d88399ba2b4a3, type: 3}
-  - {fileID: 919132149155446097, guid: 00edd296b23c8ee4d809382a7eb62aa7, type: 3}
-  middleObjectsPrefabs:
-  - {fileID: 919132149155446097, guid: abe8487ddcdd7b64cba4cf7dd4ad33de, type: 3}
-  - {fileID: 919132149155446097, guid: 4ecddbd15f67e3c42882b07dc9f68c81, type: 3}
-  - {fileID: 919132149155446097, guid: 4ecddbd15f67e3c42882b07dc9f68c81, type: 3}
-  - {fileID: 919132149155446097, guid: f2c707c2686f4c2429fe7b473b6dec5e, type: 3}
-  - {fileID: 919132149155446097, guid: bd11eec2be848cb41acd40ea1942f23e, type: 3}
-  amountPerPrefab: 10
---- !u!114 &7412467639201123403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5981760081311846903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f5f9b8f4d9e4ab4957eafba07e18811, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObstaclesGenerator
-  lines:
-  - {fileID: 7266545270782380441}
-  - {fileID: 6527171091592108456}
-  - {fileID: 3423927723194750404}
-  platformObstacleChance: 0.3
-  laneObstacleChance: 0.4
---- !u!114 &7412467639201123404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5981760081311846903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8a30d41e9a848f8b06a4a9f13d0c4e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObstaclesPoolingSystem
+  coinPrefab: {fileID: 7666318594349521552, guid: 4a388a34793dabc40be371f9b794760a, type: 3}
   obstaclesPrefabs:
   - {fileID: 2959496292414680887, guid: b3d6caa2d04379f4898332c975666312, type: 3}
-  amountPerPrefab: 10
+  platformObstacleChance: 0.45
+  laneObstacleChance: 0.7
+  maxObstaclesPerPlatform: 3
+  farSpawnPoints:
+  - {fileID: 4287209259015828142}
+  - {fileID: 1379198348354241947}
+  middleSpawnPoints:
+  - {fileID: 5477277459065895717}
+  - {fileID: 3596511286408003358}
+  farObjectsPrefabs:
+  - {fileID: 919132149155446097, guid: b2b8027de43bd314db2d88399ba2b4a3, type: 3}
+  - {fileID: 919132149155446097, guid: c380384fb4117184aae908cfe1d8c44a, type: 3}
+  - {fileID: 919132149155446097, guid: a152ad92f40e57841adf1b7f60430718, type: 3}
+  middleObjectsPrefabs:
+  - {fileID: 919132149155446097, guid: f2c707c2686f4c2429fe7b473b6dec5e, type: 3}
+  - {fileID: 919132149155446097, guid: 00edd296b23c8ee4d809382a7eb62aa7, type: 3}
+  environmentSpawnChance: 0.7
 --- !u!1 &6248289359193971944
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,8 +570,8 @@ Transform:
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3260422083729557244}
   - {fileID: 3805717040698773394}
+  - {fileID: 3260422083729557244}
   m_Father: {fileID: 2972232649193410025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8287025345803210955
@@ -808,16 +726,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6692840142768265717, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}
   m_PrefabInstance: {fileID: 1216689270929826512}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6104987912780237716 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4925753110331976004, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}
-  m_PrefabInstance: {fileID: 1216689270929826512}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7344017650300883540 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8433479956804087940, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}
-  m_PrefabInstance: {fileID: 1216689270929826512}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6466244270101115138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -969,16 +877,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}
---- !u!4 &1729764910521013871 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8433479956804087940, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}
-  m_PrefabInstance: {fileID: 7856777300457907947}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2977771095231926191 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4925753110331976004, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}
-  m_PrefabInstance: {fileID: 7856777300457907947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3596511286408003358 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6692840142768265717, guid: 6493aab881eaa964b80680a4ce3be36a, type: 3}

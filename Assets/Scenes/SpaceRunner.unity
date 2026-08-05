@@ -10496,8 +10496,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1289602540}
-  - component: {fileID: 1289602541}
   - component: {fileID: 1289602542}
+  - component: {fileID: 1289602541}
   m_Layer: 0
   m_Name: platformSpawner
   m_TagString: Untagged
@@ -10529,11 +10529,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1289602538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6356e48f59c1cb742b75c27a84ca4c60, type: 3}
+  m_Script: {fileID: 11500000, guid: a860bdd5b8e9b1e42a510c3c8d0633e2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformPoolingSystem
-  platformPrefab: {fileID: 5981760081311846903, guid: b74fd8f35000ffc41867e47f26358745, type: 3}
-  numberOfPlatforms: 15
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformGenerator
+  platformPrefab: {fileID: 0}
+  platformZ: 20
+  cameraTransform: {fileID: 0}
+  numberOfPlatforms: 10
+  platformsWithoutObstaclesAtStart: 5
 --- !u!114 &1289602542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10543,12 +10546,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1289602538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 469985b8e89bad344b210b6d5100ef5c, type: 3}
+  m_Script: {fileID: 11500000, guid: eb0bbc665b60d6e4fa6ae7806ad96669, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformGenerator
-  platformZ: 10
-  cameraTransform: {fileID: 330585546}
-  platformsWithoutObstaclesAtStart: 5
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
+  pools:
+  - tag: Platform
+    prefab: {fileID: 5981760081311846903, guid: b74fd8f35000ffc41867e47f26358745, type: 3}
+    size: 15
+    canExtend: 0
+  - tag: Obstacle
+    prefab: {fileID: 2959496292414680887, guid: b3d6caa2d04379f4898332c975666312, type: 3}
+    size: 9
+    canExtend: 0
+  - tag: Coins
+    prefab: {fileID: 7666318594349521552, guid: 4a388a34793dabc40be371f9b794760a, type: 3}
+    size: 9
+    canExtend: 0
+  - tag: Environment
+    prefab: {fileID: 5981760081311846903, guid: b74fd8f35000ffc41867e47f26358745, type: 3}
+    size: 4
+    canExtend: 0
 --- !u!1 &1294462755
 GameObject:
   m_ObjectHideFlags: 0
