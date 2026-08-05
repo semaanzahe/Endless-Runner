@@ -10532,10 +10532,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a860bdd5b8e9b1e42a510c3c8d0633e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformGenerator
-  platformPrefab: {fileID: 0}
-  platformZ: 20
-  cameraTransform: {fileID: 0}
-  numberOfPlatforms: 10
+  platformPrefab: {fileID: 5981760081311846903, guid: b74fd8f35000ffc41867e47f26358745, type: 3}
+  platformZ: 10
+  cameraTransform: {fileID: 330585546}
+  numberOfPlatforms: 15
   platformsWithoutObstaclesAtStart: 5
 --- !u!114 &1289602542
 MonoBehaviour:
